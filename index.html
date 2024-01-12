@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    #shortenForm {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #shortenInput {
+      width: 300px;
+      padding: 8px;
+      margin-right: 10px;
+    }
+    #shortenButton {
+      padding: 10px;
+    }
+    #urlList {
+      margin-top: 20px;
+      text-align: center;
+    }
+    #urlList table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    #urlList th, #urlList td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <h1>URL Shortener</h1>
+
+  <div id="shortenForm">
+    <input type="text" id="shortenInput" placeholder="Enter URL">
+    <button id="shortenButton">Shorten URL</button>
+  </div>
+
+  <div id="urlList">
+    <h2>URL List</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>URL</th>
+          <th>Short URL</th>
+          <th>Count</th>
+        </tr>
+      </thead>
+      <tbody id="urlListBody"></tbody>
+    </table>
+  </div>
+
+</body>
+</html>
