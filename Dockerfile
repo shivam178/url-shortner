@@ -26,6 +26,6 @@ COPY --from=0 /usr/app/.env .env
 COPY --from=0 /usr/app/index.html index.html
 COPY --from=0 /usr/app/public public/
 RUN npm install nodemon -g
-EXPOSE 3000:3000
+EXPOSE 3000
 
 CMD ["sh", "-c", "npm run start:${envValue}"]
