@@ -4,7 +4,13 @@ import express from "express";
 import helmet from "helmet";
 import createConn, { serverStatus } from "./src/database";
 import UrlModel from "./src/models/urlModel";
-  
+
+Date.prototype['addHours'] = function (h: number) {
+  console.log('h', h)
+  this.setTime(this.getTime() + (h * 60 * 60 * 1000));
+  return this;
+};
+
 const app = express();
 
 app.use(express.static("public"));
@@ -29,9 +35,17 @@ app.use('/db/health', (req, res) => {
 
 app.post('/generate-short-url', async (req, res) => {
   try {
-    const url = new UrlModel({ fullUrl: req.body.fullUrl });
+    const expirationHours = req.body.expirationHrs || 0;
+    
+    // Calculate expiration time using addHours
+    if (await UrlModel.findOne({ fullUrl: req.body.fullUrl })) {
+      return res.status(409).send()
+    }
+    // @ts-ignore
+    const expirationDate = (new Date().addHours(expirationHours) as Date).toISOString();
+    const url = new UrlModel({ fullUrl: req.body.fullUrl, expirationDate });
     await url.save();
-    res.redirect('/');
+    res.status(200).send();
   } catch (error) {
     res.status(500).send('Internal server error');
   }
@@ -46,12 +60,24 @@ app.get('/list', async (req, res) => {
   }
 })
 
+app.get('/empty-db', async (req, res) => {
+  try {
+    await UrlModel.deleteMany();
+    res.status(200).send();
+  } catch (error) {
+    res.status(500).send('Internal server error');
+  }
+})
+
 app.get('/:shortUrl', async (req, res) => {
   try {
     const shortUrl = req.params.shortUrl;
     const url = await UrlModel.findOne({ shortUrl });
     if (!url) {
-      return res.status(500).send('URL not found');
+      return res.status(400).send('URL not found');
+    }
+    if (url.expirationDate && new Date() > new Date(url.expirationDate)) {
+      return res.status(400).send('URL expired');
     }
     url.clicks++;
     url.save();

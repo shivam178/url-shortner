@@ -5,6 +5,8 @@ export interface IUrlModel {
   fullUrl: string;
   shortUrl: string;
   clicks: number;
+  expirationDate?: string
+  createdOn: string
 }
 
 export const UrlSchema = new Schema<IUrlModel>({
@@ -21,6 +23,16 @@ export const UrlSchema = new Schema<IUrlModel>({
     type: Number,
     required: true,
     default: 0,
+  },
+  expirationDate: {
+    type: String,
+    required: false,
+    default: null,
+  },
+  createdOn: {
+    type: String,
+    required: true,
+    default: new Date().toISOString(),
   },
 });
 

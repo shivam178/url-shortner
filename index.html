@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://cdn.jsdelivr.net">
   <title>URL Shortener</title>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -20,6 +22,11 @@
     }
     #shortenInput {
       width: 300px;
+      padding: 8px;
+      margin-right: 10px;
+    }
+    #expirationInput {
+      width: 150px;
       padding: 8px;
       margin-right: 10px;
     }
@@ -41,6 +48,7 @@
     }
   </style>
   <script src="script.js" defer></script>
+  <script src="toastify.js" defer></script>
 </head>
 <body>
 
@@ -48,6 +56,7 @@
 
   <div id="shortenForm">
     <input type="text" id="shortenInput" placeholder="Enter URL">
+    <input type="number" id="expirationInput" placeholder="Expiration (hours)">
     <button id="shortenButton">Shorten URL</button>
   </div>
 
@@ -58,6 +67,8 @@
         <tr>
           <th>URL</th>
           <th>Short URL</th>
+          <th>Expiration Date</th>
+          <th>Expired</th>
           <th>Count</th>
         </tr>
       </thead>
