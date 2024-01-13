@@ -22,7 +22,6 @@ COPY package.json ./
 RUN npm install --only=production
 
 COPY --from=0 /usr/app/build .
-COPY --from=0 /usr/app/.env .env
 COPY --from=0 /usr/app/index.html index.html
 COPY --from=0 /usr/app/public public/
 RUN npm install nodemon -g
