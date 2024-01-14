@@ -1,4 +1,7 @@
 # ExpressJS-MongoDB-TypeScript-URL-shortner
+![Compile and build](https://github.com/shivam178/url-shortner/actions/workflows/build.yml/badge.svg)
+![Build Docker Image](https://github.com/shivam178/url-shortner/workflows/Dockerize/badge.svg)
+
 
 ## This service shortens the URL
 
