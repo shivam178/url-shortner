@@ -6,7 +6,6 @@ import createConn, { serverStatus } from "./src/database";
 import UrlModel from "./src/models/urlModel";
 
 Date.prototype['addHours'] = function (h: number) {
-  console.log('h', h)
   this.setTime(this.getTime() + (h * 60 * 60 * 1000));
   return this;
 };
@@ -35,7 +34,7 @@ app.use('/db/health', (req, res) => {
 
 app.post('/generate-short-url', async (req, res) => {
   try {
-    const expirationHours = req.body.expirationHrs || 0;
+    const expirationHours = req.body.expiration || 0;
     
     // Calculate expiration time using addHours
     if (await UrlModel.findOne({ fullUrl: req.body.fullUrl })) {
